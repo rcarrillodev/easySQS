@@ -22,6 +22,7 @@ By enabling the fifo test feature, this script will send __the same message__ wi
 ## Requirements
 - Python 3.x
 - AWS credentials configured in your environment or via a profile.
+- This tool uses boto3, botocore and sqs-extended-client libraries.
 - Required Python packages (install via `requirements.txt`):
   ```bash
   pip install -r requirements.txt
