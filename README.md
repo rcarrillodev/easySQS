@@ -1,4 +1,3 @@
-=======
 # easy_sqs.py
 
 `easy_sqs.py` is a Python script designed to send messages to an AWS SQS queue. It supports reading the message body from an specified file and message attributes from a JSON file. The script allows specifying the AWS profile, queue name, and other parameters via a `.properties` file.
