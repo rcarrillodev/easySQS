@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 =======
 # easy_sqs.py
 
@@ -74,4 +72,3 @@ If any required file is missing or improperly formatted, the script will log an 
 ## Author
 RCarrillo Dev - 
 https://github.com/rcarrillodev
->>>>>>> dev
