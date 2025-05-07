@@ -56,6 +56,32 @@ fifo_num_of_messages=5 #Optional:  if fifo_test is enabled, this parameter speci
 3. **Load Message Attributes**: Message attributes are loaded from the JSON file specified in the `message_attributes` parameter.
 4. **Send Message**: The script sends the message to the specified SQS queue. If the queue is a FIFO queue, it supports deduplication and message grouping.
 
+## Command Line Usage
+
+The `easy_sqs.py` script supports the following command-line options:
+
+| Option | Short | Long | Description | Required |
+|--------|-------|------|-------------|----------|
+| Properties File | `-p` | `--properties` | Path to the properties file containing configuration | Yes |
+| Debug Mode | `-d` | `--debug` | Enable debug logging | No |
+| Properties Section | `-s` | `--properties_section` | Section name in properties file (defaults to 'DEFAULT') | No |
+
+> **NOTE:** Any of the `parameters.properties` parameters can be overridden by specifying its key with as a command-line option. i.e.  `--s3_bucket=test --aws_profile=QA`
+
+### Example Usage
+
+```sh
+# Basic usage with properties file
+python easy_sqs.py -p parameters.properties
+
+# Using debug mode and specific properties section (ie, large messages)
+python easy_sqs.py -p parameters.properties -d -s XL
+
+# Overriding parameters.properties values from the command line
+python easy_sqs.py -p parameters.properties --aws_profile=qa --message_body=messages/large_create_game.json
+```
+
+
 ### Debug Mode
 Enable debug mode with the `-d` flag to see detailed logs:
 ```bash

@@ -111,6 +111,21 @@ def load_parameters_from_properties(file_path, section='DEFAULT'):
     except Exception as error:
         logger.error(f"Error reading properties file: {error}")
         sys.exit(1)
+        
+def override_parameters_with_args(params, args):
+    """
+    Override parameters with command line arguments if provided.
+
+    :param params: Dictionary of parameters from the properties file
+    :param args: Command line arguments
+    :return: Updated dictionary of parameters
+    """
+    for param in list_of_params:
+        arg_value = getattr(args, param, None)
+        if arg_value is not None:
+            params[param] = arg_value
+            logger.debug(f"Overriding parameter '{param}' with value from command line: {arg_value}")
+    return params
 
 def parse_arguments() -> argparse.Namespace:
     """Parse command line arguments."""
@@ -118,6 +133,10 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument('-p', '--properties', required=True, help='Properties file path')
     parser.add_argument('-d', '--debug', action='store_true', help='Enable debug logging')
     parser.add_argument('-s', '--properties_section', default='DEFAULT', help='Section in properties file to read parameters from')
+    
+    for p in list_of_params:
+        parser.add_argument(f'--{p}', help=f'Specify {p} parameter (overrides properties file if provided)')
+    
     return parser.parse_args()
 
 def main() -> None:
@@ -130,6 +149,9 @@ def main() -> None:
         
         params = load_parameters_from_properties(args.properties, section=args.properties_section)
         logger.debug(f"Loaded parameters: {params}")
+        
+        # Override any parameters from command line arguments
+        params = override_parameters_with_args(params, args)
 
         message_body = load_message_body(params['message_body'])
         message_attributes = load_message_attributes(params['message_attributes'])
